@@ -373,10 +373,17 @@ class Console(object):
             return False
 
         #Implemented this to search specifically for the SKIP flag - Jack
-        skipObj = WithFlags(self._code[1])
-        if(type(skipObj.get_flags()) is set):
-            if("SKIP" in skipObj.get_flags()):
-                return None
+        
+        if(type(self._code[1]) == str):
+            skipObj = WithFlags(self._code[1])
+            if(type(skipObj.get_flags() is set)):
+                try:
+                    if("SKIP" in skipObj.get_flags()):
+                        return None
+                except TypeError as e:
+                    pass
+            
+
 
         success = self._interpret_lines(self._code, compare_all=True)
 
@@ -561,13 +568,14 @@ class Console(object):
             # NOTE: No difference for legacy exceptions or debug messages.
         skipped = True        
         if(len(expected.output) > 0): #Jack
-            var = "\n".join(expected.output)
-            actu = "\n".join(actual.output)
+
 
             if(value is None):
                 value = -1
             
             if (len(expected.output) > 1):
+                var = "\n".join(expected.output)
+                actu = "\n".join(actual.output)
                 flagObj = WithFlags(code, var, actu)
             else:
                 flagObj = WithFlags(code, expected.output[0], value)

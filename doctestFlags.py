@@ -77,7 +77,6 @@ class WithFlags:
         for i in range(len(wSplit)):
             results = pattern.finditer(wSplit[i])
             for result in results:
-                #print('result: {}'.format(result)) #NOTE: Uncomment to view the registered flags.
                 if("+" in result.string[:]):
                     flags.add(wSplit[i].strip().strip("+"))
                 elif("-" in result.string[:]):
@@ -93,7 +92,6 @@ class WithFlags:
     #Effects: Removes the non-valid flags
     def validate_flags(self,flags):
         flags.intersection_update(set(self.keys))
-        print('flgs: {}'.format(flags))
         return flags
     
     
